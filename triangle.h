@@ -8,7 +8,7 @@ struct Triangle
     // list of indices that are used in a vertex list to get the position in space of the triangle's vertices
     int tri[3];
 
-    /** default/empty constructor */
+    /** empty constructor */
     Triangle()
     {
         tri[0] = 0;
