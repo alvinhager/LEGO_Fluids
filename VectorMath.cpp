@@ -1,7 +1,7 @@
 
 #include "VectorMath.h"
 
-// 3-DIM VECTOR DEFINITIONS
+// VECTOR DEFINITIONS
 
 // default constructor
 VectorMath::vec3::vec3() : x(0.0), y(0.0), z(0.0)
@@ -167,7 +167,7 @@ VectorMath::vec3 VectorMath::vec3::normalize()
     return VectorMath::normalize(*this);
 }
 
-// 3-DIM MATRIX DEFINITIONS
+// MATRIX DEFINITIONS
 
 // by default the matrix is the identity matrix
 VectorMath::mat3::mat3()
