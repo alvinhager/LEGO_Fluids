@@ -25,6 +25,7 @@ namespace VectorMath
         vec3 mult(float s);
         vec3 divide(float s);
         vec3 negate();
+        vec3 getAbsoluteValueComponentsVector();
 
         float get(int i);
         float operator[](int i);
@@ -37,8 +38,10 @@ namespace VectorMath
     };
 
     vec3 operator+(const vec3 &v1, const vec3 &v2);
+    vec3 operator+(const VectorMath::vec3 &v1, const float n);
     vec3 &operator+=(vec3 &v1, const vec3 &v2);
     vec3 operator-(const vec3 &v1, const vec3 &v2);
+    vec3 operator-(const VectorMath::vec3 &v1, const float n);
     vec3 &operator-=(vec3 &v1, const vec3 &v2);
     vec3 operator*(float s, const vec3 &v);
     vec3 operator*(const vec3 &v, float s);

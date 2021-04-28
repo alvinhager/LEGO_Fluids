@@ -96,40 +96,62 @@ bool AABB::isPointInside(VectorMath::vec3 p)
     return is_over_minpoint && is_under_maxpoint;
 }
 
-/** checks if a line is intersecting the bounding box */
+/** checks if a line is intersecting the bounding box by using SAT theorem 
+*  SAT explanation 
+*  first the problem is translated so AABB is centered at origin.
+* SAT says that for a line segment anda  box there are six potential separating axes:
+* 1. Box axes
+* 2. Cross product of the segment dir. vector and the box axes 
+* 
+* For each axis, we test to see if projected distance from box center 
+* to the center of the line segment is greater than the sum of the objects' projected radii. 
+* If this is the case, we have a separating axis and it intersects AABB. 
+* 
+* Tests are done for:
+* 
+* 1. Box axis, one for each cardinal axis = 3 cases
+* Segment radius = abs value of segment dir. 
+* Box radius = box radius projected on to the current axis (x,y,z cardinal axes)
+* Distance = absolute value of the vector going from center of box to center of line segment 
+* 
+* 2. one test for each cross product of segment dir with each axis = 3 cases
+* Segment radius = 0 as the cross product is always perpendicular to segment direction 
+* Box radius = box radius projected onto the cross product of segment dir. vector and the box axis  = br dot cross sgmnt dir
+* Distance = absolute value of the distance from center of box to center of line segment dot  box axis 
+* */
 bool AABB::isLineIntersecting(VectorMath::vec3 p1, VectorMath::vec3 p2)
 {
     VectorMath::vec3 min = position;
     VectorMath::vec3 max = getMaxPoint();
 
-    VectorMath::vec3 d = (p2 - p1) * 0.5f;
-    VectorMath::vec3 e = (max - min) * 0.5f;
-    VectorMath::vec3 c = p1 + d - (min + max) * 0.5f;
-    VectorMath::vec3 ad = VectorMath::vec3(fabs(d.x), fabs(d.y), fabs(d.z));
+    VectorMath::vec3 line_radius = (p2 - p1) * 0.5f;
+    VectorMath::vec3 box_radius = (max - min) * 0.5f;
+    VectorMath::vec3 dist_centers = p1 + line_radius - (min + max) * 0.5f;
+    VectorMath::vec3 abs_line_radius = line_radius.getAbsoluteValueComponentsVector();
 
-    if (fabs(c.x) > e.x + ad.x)
+    if (fabs(dist_centers.x) > box_radius.x + abs_line_radius.x)
     {
         return false;
     }
-    if (fabs(c.y) > e.y + ad.y)
+    if (fabs(dist_centers.y) > box_radius.y + abs_line_radius.y)
     {
         return false;
     }
-    if (fabs(c.z) > e.z + ad.z)
+    if (fabs(dist_centers.z) > box_radius.z + abs_line_radius.z)
     {
         return false;
     }
 
     double eps = 10e-9;
-    if (fabs(d.y * c.z - d.z * c.y) > e.y * ad.z + e.z * ad.y + eps)
+    if (fabs(line_radius.y * dist_centers.z - line_radius.z * dist_centers.y) > box_radius.y * abs_line_radius.z + box_radius.z * abs_line_radius.y + eps)
     {
         return false;
     }
-    if (fabs(d.z * c.x - d.x * c.z) > e.z * ad.x + e.x * ad.z + eps)
+    if (fabs(line_radius.z * dist_centers.x - line_radius.x * dist_centers.z) > box_radius.z * abs_line_radius.x + box_radius.x * abs_line_radius.z + eps)
     {
         return false;
     }
-    if (fabs(d.x * c.y - d.y * c.x) > e.x * ad.y + e.y * ad.x + eps)
+    if (fabs(line_radius.x * dist_centers.y - line_radius.y * dist_centers.x) > box_radius.x * abs_line_radius.y + box_radius.y * abs_line_radius.x + eps)
     {
         return false;
     }

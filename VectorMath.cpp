@@ -18,6 +18,11 @@ VectorMath::vec3::~vec3()
 {
 }
 
+VectorMath::vec3 VectorMath::vec3::getAbsoluteComponentsVector()
+{
+    return VectorMath::vec3(fabs(x), fabs(y), fabs(z));
+}
+
 // for printing out vectors
 std::ostream &VectorMath::operator<<(std::ostream &os, const VectorMath::vec3 &v)
 {
