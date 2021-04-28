@@ -1,16 +1,18 @@
 #include <iostream>
-
-#include "triangle.h"
-#include "GridIndex.h"
-#include "Array3D.h"
+// #include "CustomAssert.h"
+// #include "VectorMath.h"
+#include "AABBUtilityFunctions.h"
+#include "AABB.h"
+#include "Grid3D.h"
 
 using namespace std;
 int main()
 {
 
-    GridIndex hey = GridIndex(1, 2, 3);
-    GridIndex hey2 = GridIndex(1, 2, 3);
+    // //CUSTOM_ASSERT(false);
+    // GridIndex hey = GridIndex(1, 2, 3);
+    // GridIndex hey2 = GridIndex(1, 2, 3);
 
-    cout << "Hey" << (hey != hey2) << endl;
+    // cout << "Hey" << (hey != hey2) << endl;
     return 0;
 }

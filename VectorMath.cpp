@@ -18,7 +18,7 @@ VectorMath::vec3::~vec3()
 {
 }
 
-VectorMath::vec3 VectorMath::vec3::getAbsoluteComponentsVector()
+VectorMath::vec3 VectorMath::vec3::getAbsoluteValueComponentsVector()
 {
     return VectorMath::vec3(fabs(x), fabs(y), fabs(z));
 }

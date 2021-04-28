@@ -19,8 +19,8 @@ AABB::AABB(VectorMath::vec3 pos, double w, double h, double d) : position(pos), 
 /** given two points calculates the bounding box width height depth and creates an AABB */
 AABB::AABB(VectorMath::vec3 p1, VectorMath::vec3 p2)
 {
-    VectorMath::vec3 minp = UtilityFunctions::getMinPoint(p1, p2);
-    VectorMath::vec3 maxp = UtilityFunctions::getMaxPoint(p1, p2);
+    VectorMath::vec3 minp = AABBUtilityFunctions::getMinPoint(p1, p2);
+    VectorMath::vec3 maxp = AABBUtilityFunctions::getMaxPoint(p1, p2);
 
     position = minp;
     width = maxp.x - minp.x;
@@ -37,7 +37,7 @@ AABB::AABB(std::vector<VectorMath::vec3> &points)
     }
 
     VectorMath::vec3 minmaxpts[2];
-    UtilityFunctions::getMinMaxPoints(points, minmaxpts);
+    AABBUtilityFunctions::getMinMaxPoints(points, minmaxpts);
     VectorMath::vec3 maxp = minmaxpts[1];
 
     double eps = 1e-9;
@@ -55,7 +55,7 @@ AABB::AABB(Triangle t, std::vector<VectorMath::vec3> &vertices)
                                   vertices[t.tri[2]]};
 
     VectorMath::vec3 minmaxpts[2];
-    UtilityFunctions::getMinMaxPoints(points, 3, minmaxpts);
+    AABBUtilityFunctions::getMinMaxPoints(points, 3, minmaxpts);
 
     VectorMath::vec3 maxp = minmaxpts[1];
 
@@ -173,8 +173,8 @@ AABB AABB::getIntersection(AABB bbox)
         return AABB();
     }
 
-    VectorMath::vec3 interminp = UtilityFunctions::getMaxPoint(minp1, minp2);
-    VectorMath::vec3 intermaxp = UtilityFunctions::getMinPoint(maxp1, maxp2);
+    VectorMath::vec3 interminp = AABBUtilityFunctions::getMaxPoint(minp1, minp2);
+    VectorMath::vec3 intermaxp = AABBUtilityFunctions::getMinPoint(maxp1, maxp2);
 
     return AABB(interminp, intermaxp);
 }
@@ -187,8 +187,8 @@ AABB AABB::getUnion(AABB bbox)
     VectorMath::vec3 maxp1 = getMaxPoint();
     VectorMath::vec3 maxp2 = bbox.getMaxPoint();
 
-    VectorMath::vec3 unionminp = UtilityFunctions::getMinPoint(minp1, minp2);
-    VectorMath::vec3 unionmaxp = UtilityFunctions::getMaxPoint(maxp1, maxp2);
+    VectorMath::vec3 unionminp = AABBUtilityFunctions::getMinPoint(minp1, minp2);
+    VectorMath::vec3 unionmaxp = AABBUtilityFunctions::getMaxPoint(maxp1, maxp2);
 
     return AABB(unionminp, unionmaxp);
 }

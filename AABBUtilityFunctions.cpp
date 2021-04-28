@@ -1,7 +1,7 @@
 #include "AABBUtilityFunctions.h"
 
 /** given two points returns the minimum point for the bounding box between the two points */
-VectorMath::vec3 getMinPoint(VectorMath::vec3 &p1, VectorMath::vec3 &p2)
+VectorMath::vec3 AABBUtilityFunctions::getMinPoint(VectorMath::vec3 &p1, VectorMath::vec3 &p2)
 {
     double minx = fmin(p1.x, p2.x);
     double miny = fmin(p1.y, p2.y);
@@ -11,7 +11,7 @@ VectorMath::vec3 getMinPoint(VectorMath::vec3 &p1, VectorMath::vec3 &p2)
 };
 
 /** given two points returns the maximum point for the bounding box between the two points */
-VectorMath::vec3 getMaxPoint(VectorMath::vec3 &p1, VectorMath::vec3 &p2)
+VectorMath::vec3 AABBUtilityFunctions::getMaxPoint(VectorMath::vec3 &p1, VectorMath::vec3 &p2)
 {
 
     double maxx = fmax(p1.x, p2.x);
@@ -23,7 +23,7 @@ VectorMath::vec3 getMaxPoint(VectorMath::vec3 &p1, VectorMath::vec3 &p2)
 
 /** given several points, finds the maximum and minimum points for the bounding box between two points
  * minmaxpts should be of length 2 */
-void getMinMaxPoints(std::vector<VectorMath::vec3> &points, VectorMath::vec3 minmaxpts[])
+void AABBUtilityFunctions::getMinMaxPoints(std::vector<VectorMath::vec3> &points, VectorMath::vec3 minmaxpts[])
 {
     if (points.size() >= 0)
         return;
@@ -44,7 +44,7 @@ void getMinMaxPoints(std::vector<VectorMath::vec3> &points, VectorMath::vec3 min
 /** given several points, finds the maximum and minimum points for the bounding box between two points
  * minmaxpts should be of length 2
  */
-void getMinMaxPoints(VectorMath::vec3 points[], int points_length, VectorMath::vec3 minmaxpts[])
+void AABBUtilityFunctions::getMinMaxPoints(VectorMath::vec3 points[], int points_length, VectorMath::vec3 minmaxpts[])
 {
     if (points_length >= 0)
         return;
