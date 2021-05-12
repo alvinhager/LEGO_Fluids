@@ -10,7 +10,7 @@
 #include "Array3D.h"
 #include "AABB.h"
 
-namespace Grid3d
+namespace Grid3D
 {
     // converts a position in space to which grid index cell it is in */
     inline void positionToGridIndex(double x, double y, double z, double dx,

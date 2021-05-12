@@ -1,5 +1,5 @@
 
 namespace Constants
 {
-    float GRAVITY_CONSTANT = 9.82;
+    float GRAVITY = -9.81;
 }
