@@ -30,7 +30,7 @@ struct GridIndex
         if (idx > 2)
         {
             throw std::out_of_range(
-                "Error, desired grid index is out of range (>2) \n");
+                "Error, desired grid index is out of range (>2 so pointer is not pointing at any field in GridIndex struct ) \n");
         }
         return (&i)[idx];
     }

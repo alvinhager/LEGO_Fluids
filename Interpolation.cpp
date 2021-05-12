@@ -72,6 +72,7 @@ double Interpolation::trilinearInterpolate(VectorMath::vec3 p, double dx, Array3
     int isize = grid.width;
     int jsize = grid.height;
     int ksize = grid.depth;
+
     if (Grid3D::isGridIndexInRange(g.i, g.j, g.k, isize, jsize, ksize))
     {
         points[0] = grid(g.i, g.j, g.k);
@@ -108,13 +109,13 @@ double Interpolation::trilinearInterpolate(VectorMath::vec3 p, double dx, Array3
     return trilinearInterpolate(points, ix, iy, iz);
 }
 
-/** bilinearly interpolates a value for a square with edge values */
-double Interpolation::bilinearInterpolate(double v00, double v10, double v01, double v11, double ix, double iy)
+/** bilinearly interpolates a value for a square with square edge values given */
+double Interpolation::bilinearInterpolate(double val00, double val10, double val01, double val11, double sx, double sy)
 {
-    double lerp1 = (1 - ix) * v00 + ix * v10;
-    double lerp2 = (1 - ix) * v01 + ix * v11;
+    double xlerp1 = (1 - sx) * val00 + sx * val10;
+    double xlerp2 = (1 - sx) * val01 + sx * val11;
 
-    return (1 - iy) * lerp1 + iy * lerp2;
+    return (1 - sy) * xlerp1 + sy * xlerp2;
 }
 
 /** trilinearly interpolates the gradient at global position p */
