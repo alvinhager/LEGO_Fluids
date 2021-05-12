@@ -32,14 +32,14 @@ double Interpolation::cubicInterpolate(double p[4], double x)
 /** cubic interpolation formula from Bridson's book */
 double Interpolation::cubicInterpolate2(double p[4], double x)
 {
-    float x_2 = powf(x, 2);
-    float x_3 = powf(x, 3);
-    float negative_third = 1 / (float)3;
-    float sixth = 1 / (float)6;
+    double x_2 = pow(x, 2);
+    double x_3 = pow(x, 3);
+    double negative_third = -1 / (float)3;
+    double sixth = 1 / (float)6;
 
     return (negative_third + 0.5 * x_2 + sixth * x_3) * p[0] +
            (1 - x_2 + 0.5 * (x_3 - x)) * p[1] +
-           (x + 0.5(x_2 - x_3)) * p[2] +
+           (x + 0.5 * (x_2 - x_3)) * p[2] +
            (sixth * (x_3 - x)) * p[3];
 }
 

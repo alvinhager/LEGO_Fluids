@@ -4,6 +4,7 @@
 #include "AABBUtilityFunctions.h"
 #include "AABB.h"
 #include "Grid3D.h"
+#include "interpolation.h"
 
 using namespace std;
 int main()

@@ -11,6 +11,7 @@
 namespace Interpolation
 {
     extern double cubicInterpolate(double points[4], double x);
+    extern double cubicInterpolate2(double p[4], double x);
     extern double bicubicInterpolate(double points[4][4], double x, double y);
     extern double tricubicInterpolate(double points[4][4][4], double x, double y, double z);
 
