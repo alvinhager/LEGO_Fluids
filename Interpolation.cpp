@@ -1,4 +1,4 @@
-#include "interpolation.h"
+#include "Interpolation.h"
 #include <math.h>
 
 /** for 3D, interpolates using cubic interpolation for each layer of the x pancake, then at the end interpolates this along z axis */

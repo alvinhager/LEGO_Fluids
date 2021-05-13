@@ -221,6 +221,19 @@ public:
         _grid[_getFlatIndex(i, j, k)] = value;
     }
 
+    /** sets the grid index to the value */
+    void set(GridIndex g, T value)
+    {
+        if (!_isIndexInRange(g))
+        {
+            std::string msg = "Error: index out of range.\n";
+            msg += "i: " + _toString(g.i) + " j: " + _toString(g.j) + " k: " + _toString(g.k) + "\n";
+            throw std::out_of_range(msg);
+        }
+
+        _grid[_getFlatIndex(g)] = value;
+    }
+
     /** sets the given cells to the given value */
     void set(std::vector<GridIndex> &cells, T value)
     {
@@ -358,7 +371,7 @@ public:
     }
 
     /** sets the out of range value to val + out of range value set to true */
-    void setoutOfRangeReturnValue(T val)
+    void setOutOfRangeReturnValue(T val)
     {
         _outOfRangeReturnValue = val;
         _outOfRangeAllowed = true;
