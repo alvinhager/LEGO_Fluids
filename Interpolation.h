@@ -8,6 +8,7 @@
 #include <iostream>
 #include <math.h>
 
+/** namespace that holds interpolation functions */
 namespace Interpolation
 {
     extern double cubicInterpolate(double points[4], double x);
