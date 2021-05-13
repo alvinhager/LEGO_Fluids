@@ -13,6 +13,7 @@
 #include <iostream>
 #include <limits>
 
+/** MAC velocity field class that stores u,v,w velocity component grids */
 class MACVelocityField
 {
 

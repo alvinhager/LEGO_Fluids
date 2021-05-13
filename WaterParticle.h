@@ -3,6 +3,7 @@
 
 #include "VectorMath.h"
 
+/** simple water particle struct that stores a water particle's info: position + velocity */
 struct WaterParticle
 {
     VectorMath::vec3 velocity;

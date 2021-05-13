@@ -1,20 +1,24 @@
 
 #include "MACVelocityField.h"
 
+/** initialises the MAC velocity Field */
 MACVelocityField::MACVelocityField()
 {
     _initializeVelocityGrids();
 }
 
+/** initialises a MAC velocity field to a given size and cell size dx */
 MACVelocityField::MACVelocityField(int isize, int jsize, int ksize, double dx) : _isize(isize), _jsize(jsize), _ksize(ksize), _dx(dx)
 {
     _initializeVelocityGrids();
 }
 
+/** destructor */
 MACVelocityField::~MACVelocityField()
 {
 }
 
+/** initialize the velocity grids for each component u,v,w */
 void MACVelocityField::_initializeVelocityGrids()
 {
     _u = Array3D<float>(_isize + 1, _jsize, _ksize, 0.0f);
@@ -26,6 +30,7 @@ void MACVelocityField::_initializeVelocityGrids()
     _w.setOutOfRangeReturnValue(0.0f);
 }
 
+/** fills the dimensions of the grid in i,j,k */
 void MACVelocityField::getGridDim(int *i, int *j, int *k)
 {
     *i = _isize;
@@ -33,26 +38,31 @@ void MACVelocityField::getGridDim(int *i, int *j, int *k)
     *k = _ksize;
 }
 
+/** returns the grid cell size */
 double MACVelocityField::getGridCellSize()
 {
     return _dx;
 }
 
+/** clears the U velocity grid */
 void MACVelocityField::clearU()
 {
     _u.fill(0.0);
 }
 
+/** clears the U velocity grid */
 void MACVelocityField::clearV()
 {
     _v.fill(0.0);
 }
 
+/** clears the V velocity grid */
 void MACVelocityField::clearW()
 {
     _w.fill(0.0);
 }
 
+/** clears the W velocity grid */
 void MACVelocityField::clear()
 {
     clearU();
@@ -60,36 +70,43 @@ void MACVelocityField::clear()
     clearW();
 }
 
+/** returns the array pointer for U velocity field */
 Array3D<float> *MACVelocityField::getArray3DU()
 {
     return &_u;
 }
 
+/** returns the array pointer for V velocity field */
 Array3D<float> *MACVelocityField::getArray3DV()
 {
     return &_v;
 }
 
+/** returns the array pointer for W velocity field */
 Array3D<float> *MACVelocityField::getArray3DW()
 {
     return &_w;
 }
 
+/** returns a pointer to the inner array structure storing the velocity field U */
 float *MACVelocityField::getRawArrayPointerU()
 {
     return _u.getRawArray();
 }
 
+/** returns a pointer to the inner array structure storing the velocity field V */
 float *MACVelocityField::getRawArrayPointerV()
 {
     return _v.getRawArray();
 }
 
+/** returns a pointer to the inner array structure storing the velocity field W */
 float *MACVelocityField::getRawArrayPointerW()
 {
     return _w.getRawArray();
 }
 
+/** returns the U velocity value at (i,j,k) - if out of range returns the default out of range value */
 float MACVelocityField::U(int i, int j, int k)
 {
     if (!isIndexInRangeU(i, j, k))
@@ -100,6 +117,7 @@ float MACVelocityField::U(int i, int j, int k)
     return _u(i, j, k);
 }
 
+/** returns the V velocity value at (i,j,k) - if out of range returns the default out of range value */
 float MACVelocityField::V(int i, int j, int k)
 {
     if (!isIndexInRangeV(i, j, k))
@@ -110,6 +128,7 @@ float MACVelocityField::V(int i, int j, int k)
     return _v(i, j, k);
 }
 
+/** returns the W velocity value at (i,j,k) - if out of range returns the default out of range value */
 float MACVelocityField::W(int i, int j, int k)
 {
     if (!isIndexInRangeW(i, j, k))
@@ -120,6 +139,7 @@ float MACVelocityField::W(int i, int j, int k)
     return _w(i, j, k);
 }
 
+/** returns the U velocity value at (i,j,k) - if out of range returns the default out of range value */
 float MACVelocityField::U(GridIndex g)
 {
     if (!isIndexInRangeU(g))
@@ -130,6 +150,7 @@ float MACVelocityField::U(GridIndex g)
     return _u(g);
 }
 
+/** returns the V velocity value at (i,j,k) - if out of range returns the default out of range value */
 float MACVelocityField::V(GridIndex g)
 {
     if (!isIndexInRangeV(g))
@@ -140,6 +161,7 @@ float MACVelocityField::V(GridIndex g)
     return _v(g);
 }
 
+/** returns the W velocity value at (i,j,k) - if out of range returns the default out of range value */
 float MACVelocityField::W(GridIndex g)
 {
     if (!isIndexInRangeW(g))
@@ -150,6 +172,7 @@ float MACVelocityField::W(GridIndex g)
     return _w(g);
 }
 
+/** sets the velocity field grid component velocity values to the same values as the ones in the given vfield */
 void MACVelocityField::set(MACVelocityField &vfield)
 {
     int vi, vj, vk;
@@ -190,6 +213,7 @@ void MACVelocityField::set(MACVelocityField &vfield)
     }
 }
 
+/** Sets a U component value */
 void MACVelocityField::setU(int i, int j, int k, double val)
 {
     if (!isIndexInRangeU(i, j, k))
@@ -200,6 +224,7 @@ void MACVelocityField::setU(int i, int j, int k, double val)
     _u.set(i, j, k, (float)val);
 }
 
+/** Sets a V component value */
 void MACVelocityField::setV(int i, int j, int k, double val)
 {
     if (!isIndexInRangeV(i, j, k))
@@ -210,6 +235,7 @@ void MACVelocityField::setV(int i, int j, int k, double val)
     _v.set(i, j, k, (float)val);
 }
 
+/** Sets a W component value */
 void MACVelocityField::setW(int i, int j, int k, double val)
 {
     if (!isIndexInRangeW(i, j, k))
@@ -220,21 +246,25 @@ void MACVelocityField::setW(int i, int j, int k, double val)
     _w.set(i, j, k, (float)val);
 }
 
+/** Sets a U component value at given grid index */
 void MACVelocityField::setU(GridIndex g, double val)
 {
     setU(g.i, g.j, g.k, val);
 }
 
+/** Sets a V component value at given grid index */
 void MACVelocityField::setV(GridIndex g, double val)
 {
     setV(g.i, g.j, g.k, val);
 }
 
+/** Sets a V component value at given grid index */
 void MACVelocityField::setW(GridIndex g, double val)
 {
     setW(g.i, g.j, g.k, val);
 }
 
+/** sets U grid to the whole Ugrid given */
 void MACVelocityField::setU(Array3D<float> &ugrid)
 {
     CUSTOM_ASSERT(ugrid.width == _u.width &&
@@ -243,6 +273,7 @@ void MACVelocityField::setU(Array3D<float> &ugrid)
     _u = ugrid;
 }
 
+/** sets V grid to the whole W grid given */
 void MACVelocityField::setV(Array3D<float> &vgrid)
 {
     CUSTOM_ASSERT(vgrid.width == _v.width &&
@@ -251,6 +282,7 @@ void MACVelocityField::setV(Array3D<float> &vgrid)
     _v = vgrid;
 }
 
+/** sets W grid to the whole W grid given */
 void MACVelocityField::setW(Array3D<float> &wgrid)
 {
     CUSTOM_ASSERT(wgrid.width == _w.width &&
@@ -259,6 +291,7 @@ void MACVelocityField::setW(Array3D<float> &wgrid)
     _w = wgrid;
 }
 
+/** increments (i,j,k) value in U by value */
 void MACVelocityField::addU(int i, int j, int k, double val)
 {
     if (!isIndexInRangeU(i, j, k))
@@ -269,6 +302,7 @@ void MACVelocityField::addU(int i, int j, int k, double val)
     _u.add(i, j, k, (float)val);
 }
 
+/** increments (i,j,k) value in V by value */
 void MACVelocityField::addV(int i, int j, int k, double val)
 {
     if (!isIndexInRangeV(i, j, k))
@@ -279,6 +313,7 @@ void MACVelocityField::addV(int i, int j, int k, double val)
     _v.add(i, j, k, (float)val);
 }
 
+/** increments (i,j,k) value in W by value */
 void MACVelocityField::addW(int i, int j, int k, double val)
 {
     if (!isIndexInRangeW(i, j, k))
@@ -289,6 +324,7 @@ void MACVelocityField::addW(int i, int j, int k, double val)
     _w.add(i, j, k, (float)val);
 }
 
+/** evaluates the velocity at the center of given cell */
 VectorMath::vec3 MACVelocityField::evaluateVelocityAtCellCenter(int i, int j, int k)
 {
     CUSTOM_ASSERT(Grid3D::isGridIndexInRange(i, j, k, _isize, _jsize, _ksize));
@@ -300,6 +336,7 @@ VectorMath::vec3 MACVelocityField::evaluateVelocityAtCellCenter(int i, int j, in
     return VectorMath::vec3((float)xavg, (float)yavg, (float)zavg);
 }
 
+/** evaluates the magnitude of the velocity squared at center of given cell */
 float MACVelocityField::evaluateVelocityMagnitudeSquaredAtCellCenter(int i, int j, int k)
 {
     CUSTOM_ASSERT(Grid3D::isGridIndexInRange(i, j, k, _isize, _jsize, _ksize));
@@ -311,6 +348,7 @@ float MACVelocityField::evaluateVelocityMagnitudeSquaredAtCellCenter(int i, int 
     return (float)(xavg * xavg + yavg * yavg + zavg * zavg);
 }
 
+/** evaluates the magnitude of the velocity Magnitude at center of given cell */
 float MACVelocityField::evaluateVelocityMagnitudeAtCellCenter(int i, int j, int k)
 {
     CUSTOM_ASSERT(Grid3D::isGridIndexInRange(i, j, k, _isize, _jsize, _ksize));
@@ -326,6 +364,7 @@ float MACVelocityField::evaluateVelocityMagnitudeAtCellCenter(int i, int j, int 
     }
 }
 
+/** evaluates the maximum velocity magnitude on the grid */
 float MACVelocityField::evaluateMaximumVelocityMagnitude()
 {
     double maxsq = 0.0;
@@ -351,6 +390,7 @@ float MACVelocityField::evaluateMaximumVelocityMagnitude()
     return (float)max;
 }
 
+/** evaluates the velocity at the center of  U face*/
 VectorMath::vec3 MACVelocityField::evaluateVelocityAtFaceCenterU(int i, int j, int k)
 {
     CUSTOM_ASSERT(isIndexInRangeU(i, j, k));
@@ -363,6 +403,7 @@ VectorMath::vec3 MACVelocityField::evaluateVelocityAtFaceCenterU(int i, int j, i
     return VectorMath::vec3((float)vx, (float)vy, (float)vz);
 }
 
+/** evaluates the velocity at the center of V face*/
 VectorMath::vec3 MACVelocityField::evaluateVelocityAtFaceCenterV(int i, int j, int k)
 {
     CUSTOM_ASSERT(isIndexInRangeV(i, j, k));
@@ -375,6 +416,7 @@ VectorMath::vec3 MACVelocityField::evaluateVelocityAtFaceCenterV(int i, int j, i
     return VectorMath::vec3((float)vx, (float)vy, (float)vz);
 }
 
+/** evaluates the velocity at the center of W face*/
 VectorMath::vec3 MACVelocityField::evaluateVelocityAtFaceCenterW(int i, int j, int k)
 {
     CUSTOM_ASSERT(isIndexInRangeW(i, j, k));
@@ -387,6 +429,7 @@ VectorMath::vec3 MACVelocityField::evaluateVelocityAtFaceCenterW(int i, int j, i
     return VectorMath::vec3((float)vx, (float)vy, (float)vz);
 }
 
+/** interpolates the value of U using tricubic interpolation at a given global position (x,y,z) */
 double MACVelocityField::_interpolateU(double x, double y, double z)
 {
     if (!Grid3D::isPositionInGrid(x, y, z, _dx, _isize, _jsize, _ksize))
@@ -426,6 +469,7 @@ double MACVelocityField::_interpolateU(double x, double y, double z)
     return Interpolation::tricubicInterpolate(points, ix, iy, iz);
 }
 
+/** interpolates the value of V using tricubic interpolation at a given global position (x,y,z) */
 double MACVelocityField::_interpolateV(double x, double y, double z)
 {
     if (!Grid3D::isPositionInGrid(x, y, z, _dx, _isize, _jsize, _ksize))
@@ -465,6 +509,7 @@ double MACVelocityField::_interpolateV(double x, double y, double z)
     return Interpolation::tricubicInterpolate(points, ix, iy, iz);
 }
 
+/** interpolates the value of W using tricubic interpolation at a given global position (x,y,z) */
 double MACVelocityField::_interpolateW(double x, double y, double z)
 {
     if (!Grid3D::isPositionInGrid(x, y, z, _dx, _isize, _jsize, _ksize))
@@ -504,6 +549,7 @@ double MACVelocityField::_interpolateW(double x, double y, double z)
     return Interpolation::tricubicInterpolate(points, ix, iy, iz);
 }
 
+/** linearly interpolate the value of U at a global position (x,y,z) */
 double MACVelocityField::_linearInterpolateU(double x, double y, double z)
 {
     if (!Grid3D::isPositionInGrid(x, y, z, _dx, _isize, _jsize, _ksize))
@@ -561,6 +607,7 @@ double MACVelocityField::_linearInterpolateU(double x, double y, double z)
     return Interpolation::trilinearInterpolate(points, ix, iy, iz);
 }
 
+/** linearly interpolate the value of V at a global position (x,y,z) */
 double MACVelocityField::_linearInterpolateV(double x, double y, double z)
 {
     if (!Grid3D::isPositionInGrid(x, y, z, _dx, _isize, _jsize, _ksize))
@@ -618,6 +665,7 @@ double MACVelocityField::_linearInterpolateV(double x, double y, double z)
     return Interpolation::trilinearInterpolate(points, ix, iy, iz);
 }
 
+/** linearly interpolate the value of W at a global position (x,y,z) */
 double MACVelocityField::_linearInterpolateW(double x, double y, double z)
 {
     if (!Grid3D::isPositionInGrid(x, y, z, _dx, _isize, _jsize, _ksize))
@@ -675,11 +723,13 @@ double MACVelocityField::_linearInterpolateW(double x, double y, double z)
     return Interpolation::trilinearInterpolate(points, ix, iy, iz);
 }
 
+/** evaluate the velocity vector of V at a global position (x,y,z) using tricubic interpolation */
 VectorMath::vec3 MACVelocityField::evaluateVelocityAtPosition(VectorMath::vec3 pos)
 {
     return evaluateVelocityAtPosition(pos.x, pos.y, pos.z);
 }
 
+/** evaluate the velocity vector of V at a global position (x,y,z) using tricubic interpolation */
 VectorMath::vec3 MACVelocityField::evaluateVelocityAtPosition(double x, double y, double z)
 {
     if (!Grid3D::isPositionInGrid(x, y, z, _dx, _isize, _jsize, _ksize))
@@ -694,11 +744,13 @@ VectorMath::vec3 MACVelocityField::evaluateVelocityAtPosition(double x, double y
     return VectorMath::vec3((float)xvel, (float)yvel, (float)zvel);
 }
 
+/** evaluate the velocity vector of V at a global position (x,y,z) using trilinear interpolation  */
 VectorMath::vec3 MACVelocityField::evaluateVelocityAtPositionLinear(VectorMath::vec3 pos)
 {
     return evaluateVelocityAtPositionLinear(pos.x, pos.y, pos.z);
 }
 
+/** evaluate the velocity vector of V at a global position (x,y,z) using trilinear interpolation  */
 VectorMath::vec3 MACVelocityField::evaluateVelocityAtPositionLinear(double x, double y, double z)
 {
     if (!Grid3D::isPositionInGrid(x, y, z, _dx, _isize, _jsize, _ksize))
@@ -713,6 +765,7 @@ VectorMath::vec3 MACVelocityField::evaluateVelocityAtPositionLinear(double x, do
     return VectorMath::vec3((float)xvel, (float)yvel, (float)zvel);
 }
 
+/** extrapolate the grid values to the surrounding grid cells */
 void MACVelocityField::_extrapolateGrid(Array3D<float> &grid, Array3D<bool> &valid, int numLayers)
 {
 
@@ -874,6 +927,7 @@ void MACVelocityField::_extrapolateGrid(Array3D<float> &grid, Array3D<bool> &val
     }
 }
 
+/** extrapolates the velocity field for u,v,w component velocity fields */
 void MACVelocityField::extrapolateVelocityField(ValidVelocityGrid &validGrid, int numLayers)
 {
     _extrapolateGrid(_u, validGrid.validU, numLayers);
