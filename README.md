@@ -1,4 +1,4 @@
-# Master thesis at KTH  
+# Master thesis at KTH 2021 in Computer science with specialisation in Computer graphics and Visualisation By Alvin Häger
 
 This program creates a LEGO water animation that is coloured using a 'whitewater' effect, which occurs when air bubbles are trapped in water and create foam. This can occur when turbulent water such in a river suddenly change movement of direction with high velocities. 
 
